@@ -1,4 +1,5 @@
 products = []
+f = open("jalase 7/4-1database.txt", "r")
 def read_text_from_file():
     f = open("jalase 7/4-1database.txt", "r")
     for line in f:
@@ -8,54 +9,59 @@ def read_text_from_file():
 
 
 def add():
-    id = input("enter id : ")
+    yd = input("enter id : ")
     name = input("enter name : ")
     price = input("enter price : ")
     count = input("enter count : ")
 
-    new_product = {"id":id, "name":name, "price":price, "count":count}
+    new_product = {"id":yd, "name":name, "price":price, "count":count}
     products.append(new_product)
+    f.write(yd, ",", name, ",", price, ",", count, "\n")
+    print("New product has been successfully added.")
 
 def delet():
-    read_text_from_file()
-    num = int(input("enter id : "))
-    id = result[0]
-    name = result[1]
-    price = result[2]
-    count = result[3]
-    id_list = {result[0], result[1], result[2], result[3]}
-    f.write(id_list)
+    code = int(input("Enter item index : "))
+    #products.delet(code)
+    print("Selected product has been successfully removed.")
 
 
 def edit(): 
-    read_text_from_file()
-    f = open("jalase 7/4-1database.txt", "w")
-    for line in f:
-        result = line[0]
-        num = int(input("enter id : "))
-        if num == line[0] : 
-            print("1 - name")
-            print("2 - price")
-            print("3 - count")
-            op = input("enter your choice : ")
-            if op == "1":
-                name = input("enter name : ")
-                products.write(name)
+    num = input("enter id for edit : ")
+    for product["id"] in products :
+        while True:
+            if product["id"] == num:
+                print("1-name")
+                print("2-price")
+                print("3-count")
+                print("0-exit")
 
-            if op == "2":
-                price = int(input("enter price : "))
-                products.write(price)
+                op = int(input("enter your choice: "))
+                if op == 1:
+                    new_name = input("Enter new name: ")
+                    product["name"] = new_name
+                    print("successfully edited.")
 
-            if op == "3":
-                count = int(input("enter count"))
-                products.write(count)
-    print("operation successfully completed!!!")
-            
+                elif op == 2:
+                    new_price = input("Enter the new price:")
+                    product["price"] = new_price
+                    print("successfully edited.")
 
-            
+                elif op == 3:
+                    new_quantity = input("Enter the new count:")
+                    product["quantity"] = new_quantity
+                    print("successfully edited.")
+                
+                elif op == 0:
+                    break
 
 def search():
-    pass
+    op = input("enter your keyword : ")
+    for product in products :
+        if product["id"] or product["name"] == op :
+            print(product)
+            break
+        else:
+            print("not found!!!")
 
 def show_list():
     print("id \t name \t price \t count")
@@ -64,38 +70,36 @@ def show_list():
 
 
 def buy():
-    read_text_from_file()
+    factor = []
     buy = 0
     while True:
-        num = int(input("enter id :"))
-        f = open("jalase 7/4-1database.txt", "a")
-        for line in f :
-            result = line
-            if num == result[0] :
-                if result[3] == 0:
-                    print("inventory is not enough!!!")
-                if result[3] > 0 :
-                    op = int(input("enter the desired amount:"))
-                    buy += op
-                    result[3]-= op
-                if result[3] < num :
-                    print("inventory is not enough!!!")
-                price = num*result[2]
-                faktor = {result[1]: price}
-                print(faktor)
-                opp = input("c for continue & e for exit")
-                if opp == "c":
-                    continue
-                if opp == "e":
-                    break
-                
+        print("yes or no :")
+        op = input("Would you want to make a purchase? ")
+        if op == "yes":
+            select_id = input("enter item id: ")
+            for product in products :
+                while True:
+                    if product["id"] == select_id:
+                        co = int(input("Enter your count: "))
+                        buy += co*int(product["price"])
+                        if int(product["count"]) >= co :
+                            ad = {product["name"], str(co)}
+                            factor.append(ad)
+                            product["count"] = str(int(product["count"])-co)
+                            break
+                        elif int(product['count']) < co :
+                            print("not available!!!")
+                            break
+            else:
+                print("not found!!!")
+                break
+        elif op == "no":
+            print("your factor :")
+            for item in factor:
+                print(item)
+            print("cost is: ",buy)
+            break
         
-
-
-
-
-def write_to_database():
-    pass
 
 def show_menu():
     print("1- add")
@@ -106,6 +110,7 @@ def show_menu():
     print("6- buy")
     print("7- exit")
     
+
 while True :
     read_text_from_file()
     show_menu()
@@ -113,14 +118,14 @@ while True :
 
     if choice == 1:
         add()
-        
 
     if choice == 2:
+        show_list()
         delet()
 
     if choice == 3:
+        show_list()
         edit()
-        
 
     if choice == 4:
         search()
@@ -129,10 +134,11 @@ while True :
         show_list()
 
     if choice == 6:
+        show_list()
         buy()
 
     if choice == 7:
-        write_to_database()
+        f.close()
         exit(0)
         break
 
