@@ -19,9 +19,9 @@ def add():
     f.write(yd, ",", name, ",", price, ",", count, "\n")
     print("New product has been successfully added.")
 
-def delet():
+def delete():
     code = int(input("Enter item index : "))
-    #products.delet(code)
+    #products.delete(code)
     print("Selected product has been successfully removed.")
 
 
@@ -103,7 +103,7 @@ def buy():
 
 def show_menu():
     print("1- add")
-    print("2- delet")
+    print("2- delete")
     print("3- edit")
     print("4- search")
     print("5- show list")
@@ -121,7 +121,7 @@ while True :
 
     if choice == 2:
         show_list()
-        delet()
+        delete()
 
     if choice == 3:
         show_list()
